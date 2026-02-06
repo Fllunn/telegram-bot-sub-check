@@ -1,0 +1,27 @@
+{
+  "name": "telegram-bot-sub-check",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Telegram bot for checking user subscription to required channels",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "subscription",
+    "check"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "node-telegram-bot-api": "^0.64.0"
+  },
+  "devDependencies": {}
+}
