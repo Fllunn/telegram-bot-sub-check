@@ -1,27 +1,50 @@
 {
   "name": "telegram-bot-sub-check",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "Telegram bot for checking user subscription to required channels",
-  "main": "src/index.js",
+  "version": "2.0.0",
+  "description": "Telegram bot for checking user subscription to required channels with admin management",
+  "main": "dist/main.js",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "node --watch src/index.js"
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "start:dev": "ts-node src/main.ts",
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/main.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\""
   },
   "keywords": [
     "telegram",
     "bot",
     "subscription",
-    "check"
+    "nestjs",
+    "mongodb"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.3.1",
-    "node-telegram-bot-api": "^0.64.0"
+    "@nestjs/common": "^10.3.0",
+    "@nestjs/config": "^3.1.1",
+    "@nestjs/core": "^10.3.0",
+    "@nestjs/mongoose": "^10.0.2",
+    "@nestjs/platform-express": "^10.3.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "mongoose": "^8.0.3",
+    "node-telegram-bot-api": "^0.64.0",
+    "reflect-metadata": "^0.1.14",
+    "rxjs": "^7.8.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/node-telegram-bot-api": "^0.64.0",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "^8.56.0",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
 }
