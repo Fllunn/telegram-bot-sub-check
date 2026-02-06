@@ -1,33 +1,40 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger } from '@nestjs/common';
+import { LogLevel } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { LoggerService } from './common/logger/logger.service';
 
 async function bootstrap() {
-  const logger = new Logger('Bootstrap');
+  const logger = new LoggerService();
+  const isProduction = process.env.NODE_ENV === 'production';
 
   try {
-    logger.log('🚀 Запуск Telegram бота для проверки подписки...\n');
+    logger.log('🚀 Запуск Telegram бота для проверки подписки...', 'Bootstrap');
 
+    // In production, disable NestJS console logging
+    const nestLoggerConfig: false | LogLevel[] = isProduction 
+      ? false 
+      : ['error', 'warn', 'log'];
+    
     const app = await NestFactory.createApplicationContext(AppModule, {
-      logger: ['error', 'warn', 'log'],
+      logger: nestLoggerConfig,
     });
 
-    logger.log('\n✅ Бот готов к работе и ожидает сообщений!\n');
+    logger.log('✅ Бот готов к работе и ожидает сообщений!', 'Bootstrap');
 
     // Keep the application running
     process.on('SIGINT', async () => {
-      logger.log('\n⛔ Остановка бота...');
+      logger.warn('⛔ Остановка бота...', 'Bootstrap');
       await app.close();
       process.exit(0);
     });
 
     process.on('SIGTERM', async () => {
-      logger.log('\n⛔ Остановка бота...');
+      logger.warn('⛔ Остановка бота...', 'Bootstrap');
       await app.close();
       process.exit(0);
     });
   } catch (error) {
-    logger.error('❌ Критическая ошибка:', error);
+    logger.error('❌ Критическая ошибка:', 'Bootstrap', error);
     process.exit(1);
   }
 }
